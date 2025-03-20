@@ -21,6 +21,7 @@
             <div id="chat-box"></div>
             <input type="text" id="user-input" placeholder="Type a message...">
             <button onclick="sendMessage()">Send</button>
+            <div id="loading" class="loading">🤖 Generating response...</div>
         </div>
     </div>
 
@@ -42,9 +43,14 @@
             if (!userInput) return;
 
             let chatBox = document.getElementById("chat-box");
+            let loadingIndicator = document.getElementById("loading");
+
             let userMessage = `<div class='user-message'><strong>${userName}:</strong> ${userInput}</div>`;
             chatBox.innerHTML += userMessage;
             document.getElementById("user-input").value = "";
+
+            // Show loading message
+            loadingIndicator.style.display = "block";
 
             fetch("/chat", {
                 method: "POST",
@@ -60,9 +66,16 @@
                         <div class="ai-content">${formattedResponse}</div>
                     </div>`;
                 chatBox.innerHTML += aiMessage;
+
+                // Hide loading message
+                loadingIndicator.style.display = "none";
+
                 chatBox.scrollTop = chatBox.scrollHeight;
             })
-            .catch(error => console.error("Error:", error));
+            .catch(error => {
+                console.error("Error:", error);
+                loadingIndicator.style.display = "none"; // Hide loading on error
+            });
         }
 
         function formatAIResponse(response) {
