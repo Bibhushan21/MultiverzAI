@@ -7,7 +7,7 @@ import os
 # Initialize Flask app
 MultiverzAI = Flask(__name__)
 
-# MySQL Configuration (Update with your credentials)
+# MySQL Configuration 
 MultiverzAI.config["SQLALCHEMY_DATABASE_URI"] = "mysql+mysqlconnector://root:NewSecurePassword2024@127.0.0.1:3306/Multiverz_AI_Chat"
 MultiverzAI.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
 
@@ -17,7 +17,7 @@ db = SQLAlchemy(MultiverzAI)
 # Define Chat Model (Table Structure)
 class Chat(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    user_name = db.Column(db.String(255), nullable=False)  # Store user name
+    user_name = db.Column(db.String(255), nullable=False)  
     user_message = db.Column(db.Text, nullable=False)
     ai_response = db.Column(db.Text, nullable=False)
     timestamp = db.Column(db.DateTime, default=db.func.current_timestamp())
@@ -35,13 +35,13 @@ def extract_prompt_from_pdf(pdf_path):
             for page in reader.pages:
                 page_text = page.extract_text()
                 if page_text:
-                    prompt_text.append(page_text.replace("\n", " "))  # Remove line breaks
+                    prompt_text.append(page_text.replace("\n", " "))  
             return " ".join(prompt_text).strip()
     except Exception as e:
         return f"Error reading system prompt: {str(e)}"
 
 # Load system prompt from the PDF
-pdf_path = "Brainstorming Agent - System Prompt.pdf"  # Update path accordingly
+pdf_path = "Brainstromming/Brainstorming Agent - System Prompt.pdf"  
 system_prompt = extract_prompt_from_pdf(pdf_path)
 
 if not system_prompt or "Error" in system_prompt:
@@ -49,13 +49,14 @@ if not system_prompt or "Error" in system_prompt:
 else:
     print("✅ System prompt loaded successfully.")
 
-# System message to guide AI behavior
+
 system_message = {
     "role": "system",
-    "content": system_prompt
+    "content": 
+        system_prompt
 }
 
-# Initialize chat memory (Limited history for better context retention)
+# Initialize chat memory 
 memory = []
 
 @MultiverzAI.route("/")
