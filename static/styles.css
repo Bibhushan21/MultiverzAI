@@ -15,7 +15,7 @@ body {
 }
 
 #chat-box {
-    height: 750px;
+    height: 700px;
     overflow-y: auto;
     border: 1px solid #ccc;
     padding: 10px;
@@ -55,4 +55,23 @@ button {
 
 button:hover {
     background: #0056b3;
+}
+.loading {
+    display: none;
+    text-align: center;
+    margin-top: 10px;
+}
+.spinner {
+    border: 4px solid rgba(0, 0, 0, 0.1);
+    border-left-color: #007bff;
+    border-radius: 50%;
+    width: 24px;
+    height: 24px;
+    animation: spin 1s linear infinite;
+    display: inline-block;
+    vertical-align: middle;
+}
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
 }
